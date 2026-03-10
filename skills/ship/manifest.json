@@ -1,6 +1,6 @@
 {
   "name": "ship",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Language-agnostic quality pipeline that auto-discovers project tools (formatter, linter, build, tests), runs them all, fixes failures, then commits with conventional commits and pushes.",
   "categories": ["code-quality", "productivity"],
   "keywords": [
@@ -16,6 +16,9 @@
     "ci"
   ],
   "license": "MIT",
+  "urls": {
+    "repository": "https://github.com/almog27/skills"
+  },
   "authors": [{ "name": "Almog Ben David" }],
   "agents": {
     "platforms": ["*"],
