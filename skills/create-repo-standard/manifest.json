@@ -20,11 +20,16 @@
     "testing",
     "claude-md",
     "agents-md",
+    "cursorrules",
+    "copilot",
+    "windsurf",
+    "spm",
     "typescript",
     "python",
     "go",
     "rust"
   ],
+  "recommended_skills": ["ship"],
   "license": "MIT",
   "urls": {
     "repository": "https://github.com/almog27/skills"

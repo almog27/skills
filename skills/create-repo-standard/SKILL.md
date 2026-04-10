@@ -376,9 +376,11 @@ All commands are available via Makefile:
 - `make check` - Run all checks (format + lint + test)
 - `make clean` - Clean build artifacts
 
-## Skills (via SPM)
+## Skills (via SPM - skillpkg.dev)
 
 - **ship** (`/ship`) - Run full quality pipeline: format, lint, type check, build, test, commit, and push. Use this instead of manual git commits.
+
+To install more skills: `spm search "query"` then `spm install <skill>`
 
 ## Code Style
 
@@ -555,18 +557,57 @@ Refer to AGENTS.md for full details on workflow, testing conventions, and code r
 
 The key principle: **AGENTS.md is the single source of truth**. The agent-specific files (`.cursorrules`, `copilot-instructions.md`, `.windsurfrules`) are lightweight pointers that include enough context for the agent to work independently, but reference AGENTS.md for the full details. This avoids duplication and keeps maintenance easy - update AGENTS.md and all agents benefit.
 
-### Step 12: Install Skills via SPM
+### Step 12: Install SPM and Skills
 
-Install standard skills from the SPM registry to enhance the developer workflow:
+#### 12a: Ensure SPM is installed
+
+Check if `spm` is available. If not, ask the user which installation method they prefer:
 
 ```bash
-# Install the ship skill - quality pipeline that formats, lints, tests, commits and pushes
+# macOS (Homebrew)
+brew install skillpkg/tap/spm
+
+# Linux / macOS (curl)
+curl -fsSL https://skillpkg.dev/install.sh | sh
+
+# npm (downloads native binary)
+npm install -g @skillpkg/cli
+```
+
+SPM is a single static binary with zero runtime dependencies.
+
+#### 12b: Detect available agents
+
+Run `spm agents` to detect which AI agents are installed on the system (Claude Code, Cursor, Copilot, Codex, etc.). This determines where skills will be wired to.
+
+#### 12c: Install the ship skill
+
+```bash
 spm install ship
 ```
 
-Ask the user if they want any additional skills installed. Mention that `ship` gives them `/ship` which runs the full quality pipeline (format -> lint -> type check -> build -> test -> commit -> push) automatically.
+This installs the `ship` skill and links it to all detected agents. It gives the user `/ship` which runs the full quality pipeline (format -> lint -> type check -> build -> test -> commit -> push) automatically.
 
-If SPM is not available, inform the user they can install it and then run `spm install ship` manually later. Do not block the rest of the setup on this.
+#### 12d: Set up MCP server (optional, for Claude Code)
+
+Ask the user if they want to enable SPM skill discovery via MCP:
+
+```bash
+claude mcp add spm -- npx -y @skillpkg/mcp
+```
+
+This lets Claude discover and install skills directly from the registry during conversations.
+
+#### 12e: Ask about additional skills
+
+Ask the user if they want to search for and install any additional skills:
+
+```bash
+spm search "query"    # Find skills in the registry
+spm install <skill>   # Install a skill
+```
+
+If SPM is not available and the user cannot install it now, inform them they can install it later and run `spm install ship` manually. Do not block the rest of the setup on this.
 
 ### Step 13: Create Supporting Files
 
@@ -604,10 +645,15 @@ Created:
   - src/                       (source directory)
   - tests/                     (test directory + sample test)
 
-Skills installed (via SPM):
+Skills installed (via SPM - skillpkg.dev):
   - ship               /ship - full quality pipeline
 
-Available commands:
+SPM commands:
+  spm agents         Show detected AI agents
+  spm search "..."   Find skills in the registry
+  spm install <x>    Install a skill
+
+Makefile commands:
   make install       Install dependencies
   make build         Build the project
   make format        Format code
