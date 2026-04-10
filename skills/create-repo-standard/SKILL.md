@@ -92,13 +92,14 @@ Create the standard directory structure:
 ├── src/                  # Source code (or cmd/ + internal/ for Go)
 ├── tests/                # Test files (or *_test.go alongside for Go)
 ├── .github/
-│   └── workflows/        # CI/CD workflows
+│   ├── workflows/        # CI/CD workflows
+│   └── copilot-instructions.md  # GitHub Copilot instructions
 ├── .gitignore
 ├── Makefile
+├── skills-lock.json      # SPM lock file (commit to version control)
 ├── CLAUDE.md             # Claude Code / Claude agent instructions
 ├── AGENTS.md             # Shared instructions for all AI agents
 ├── .cursorrules          # Cursor IDE agent instructions
-├── .github/copilot-instructions.md  # GitHub Copilot instructions
 ├── .windsurfrules        # Windsurf IDE agent instructions
 ├── LICENSE
 └── README.md
@@ -588,6 +589,8 @@ spm install ship
 
 This installs the `ship` skill and links it to all detected agents. It gives the user `/ship` which runs the full quality pipeline (format -> lint -> type check -> build -> test -> commit -> push) automatically.
 
+SPM creates a `skills-lock.json` file after the first skill installation. **Commit this file to version control** - it tracks installed skills and enables `spm check` to detect available updates, similar to how `package-lock.json` works for npm.
+
 #### 12d: Set up MCP server (optional, for Claude Code)
 
 Ask the user if they want to enable SPM skill discovery via MCP:
@@ -640,6 +643,7 @@ Created:
   - .cursorrules               (Cursor IDE instructions)
   - .github/copilot-instructions.md  (GitHub Copilot instructions)
   - .windsurfrules             (Windsurf IDE instructions)
+  - skills-lock.json           (SPM lock file - committed to git)
   - README.md                  (documentation)
   - LICENSE                    (MIT)
   - src/                       (source directory)
