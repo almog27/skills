@@ -1,5 +1,5 @@
 {
-  "name": "create-repo-standard",
+  "name": "repo-init",
   "version": "1.0.0",
   "description": "Interactive skill that scaffolds a production-ready repository with standard tooling (formatter, linter, tests, CI/CD, Makefile, CLAUDE.md, AGENTS.md) based on the selected language and ecosystem.",
   "categories": ["scaffolding", "productivity", "developer-experience"],

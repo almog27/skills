@@ -1,19 +1,19 @@
 ---
-name: create-repo-standard
+name: repo-init
 version: 1.0.0
 categories:
   - scaffolding
   - productivity
   - developer-experience
 triggers:
-  - /create-repo-standard
+  - /repo-init
   - scaffold repo
   - setup repository
-  - init project standard
-  - create repo standard
+  - init repo
+  - initialize repository
 ---
 
-# Create Repo Standard
+# Repo Init
 
 Interactive skill that scaffolds a production-ready repository with all the standard tooling, configuration, CI/CD, and AI agent instructions based on the selected language and ecosystem.
 
