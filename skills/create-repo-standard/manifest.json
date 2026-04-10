@@ -1,0 +1,39 @@
+{
+  "name": "create-repo-standard",
+  "version": "1.0.0",
+  "description": "Interactive skill that scaffolds a production-ready repository with standard tooling (formatter, linter, tests, CI/CD, Makefile, CLAUDE.md, AGENTS.md) based on the selected language and ecosystem.",
+  "categories": ["scaffolding", "productivity", "developer-experience"],
+  "keywords": [
+    "scaffold",
+    "repo",
+    "repository",
+    "setup",
+    "init",
+    "standard",
+    "boilerplate",
+    "gitignore",
+    "makefile",
+    "ci",
+    "github-actions",
+    "formatter",
+    "linter",
+    "testing",
+    "claude-md",
+    "agents-md",
+    "typescript",
+    "python",
+    "go",
+    "rust"
+  ],
+  "license": "MIT",
+  "urls": {
+    "repository": "https://github.com/almog27/skills"
+  },
+  "authors": [{ "name": "Almog Ben David" }],
+  "agents": {
+    "platforms": ["*"],
+    "requires_tools": ["bash", "file_read", "file_write"],
+    "min_context": "standard"
+  },
+  "spm": { "manifest_version": 1 }
+}
