@@ -373,6 +373,10 @@ All commands are available via Makefile:
 - `make check` - Run all checks (format + lint + test)
 - `make clean` - Clean build artifacts
 
+## Skills (via SPM)
+
+- **ship** (`/ship`) - Run full quality pipeline: format, lint, type check, build, test, commit, and push. Use this instead of manual git commits.
+
 ## Code Style
 
 - Use <formatter> for formatting - do not manually format code
@@ -414,7 +418,8 @@ Instructions for AI agents (Claude, Copilot, etc.) working on this repository.
 3. Run `make format` to auto-format code
 4. Run `make lint` to check for issues (use auto-fix when available)
 5. Run `make test` to ensure tests pass
-6. Commit using conventional commits: `type(scope): description`
+6. Use `/ship` to run the full quality pipeline, commit, and push (preferred)
+   - Or commit manually using conventional commits: `type(scope): description`
 
 ## Before Every Commit
 
@@ -448,19 +453,32 @@ Before submitting a PR, verify:
 - If tests are flaky, fix the flakiness rather than retrying
 ```
 
-### Step 11: Create Supporting Files
+### Step 11: Install Skills via SPM
+
+Install standard skills from the SPM registry to enhance the developer workflow:
+
+```bash
+# Install the ship skill - quality pipeline that formats, lints, tests, commits and pushes
+spm install ship
+```
+
+Ask the user if they want any additional skills installed. Mention that `ship` gives them `/ship` which runs the full quality pipeline (format -> lint -> type check -> build -> test -> commit -> push) automatically.
+
+If SPM is not available, inform the user they can install it and then run `spm install ship` manually later. Do not block the rest of the setup on this.
+
+### Step 12: Create Supporting Files
 
 1. **README.md** - Basic readme with project name, description, setup instructions, and available make commands
 2. **LICENSE** - Generate the selected license (default MIT)
 3. Initialize git if not already initialized (`git init`)
 
-### Step 12: Install Dependencies and Verify
+### Step 13: Install Dependencies and Verify
 
 1. Run `make install` to install all dependencies
 2. Run `make check` to verify the full pipeline works
 3. If anything fails, fix it before finishing
 
-### Step 13: Final Summary
+### Step 14: Final Summary
 
 Report to the user what was created:
 
@@ -481,6 +499,9 @@ Created:
   - src/                 (source directory)
   - tests/               (test directory + sample test)
 
+Skills installed (via SPM):
+  - ship               /ship - full quality pipeline
+
 Available commands:
   make install       Install dependencies
   make build         Build the project
@@ -488,6 +509,7 @@ Available commands:
   make lint          Lint code
   make test          Run tests
   make check         Run all checks
+  /ship              Format, lint, test, commit & push
 ```
 
 ## Rules
