@@ -89,14 +89,17 @@ Create the standard directory structure:
 
 ```
 <project>/
-├── src/              # Source code (or cmd/ + internal/ for Go)
-├── tests/            # Test files (or *_test.go alongside for Go)
+├── src/                  # Source code (or cmd/ + internal/ for Go)
+├── tests/                # Test files (or *_test.go alongside for Go)
 ├── .github/
-│   └── workflows/    # CI/CD workflows
+│   └── workflows/        # CI/CD workflows
 ├── .gitignore
 ├── Makefile
-├── CLAUDE.md
-├── AGENTS.md
+├── CLAUDE.md             # Claude Code / Claude agent instructions
+├── AGENTS.md             # Shared instructions for all AI agents
+├── .cursorrules          # Cursor IDE agent instructions
+├── .github/copilot-instructions.md  # GitHub Copilot instructions
+├── .windsurfrules        # Windsurf IDE agent instructions
 ├── LICENSE
 └── README.md
 ```
@@ -453,7 +456,106 @@ Before submitting a PR, verify:
 - If tests are flaky, fix the flakiness rather than retrying
 ```
 
-### Step 11: Install Skills via SPM
+### Step 11: Create Agent-Specific Instruction Files
+
+Create instruction files for other AI agents/IDEs. Each file should reference `AGENTS.md` as the shared source of truth and include the same core rules, but in the format each tool expects.
+
+**`.cursorrules`** (Cursor IDE):
+```markdown
+# Cursor Rules
+
+Read and follow the instructions in AGENTS.md for the full development workflow.
+
+## Quick Reference
+
+- Run `make check` before every commit
+- Run `make format` and `make lint` before committing
+- Use conventional commits: `type(scope): description`
+- Write tests for all new functionality
+
+## Tech Stack
+
+- **Language**: <language>
+- **Package Manager**: <package-manager>
+- **Formatter**: <formatter>
+- **Linter**: <linter>
+- **Test Framework**: <test-framework>
+
+## Commands
+
+- `make install` - Install dependencies
+- `make build` - Build the project
+- `make format` - Format code
+- `make lint` - Lint code
+- `make test` - Run tests
+- `make check` - Run all checks
+
+Refer to AGENTS.md for full details on workflow, testing conventions, and code review checklist.
+```
+
+**`.github/copilot-instructions.md`** (GitHub Copilot):
+```markdown
+# Copilot Instructions
+
+Read and follow the instructions in AGENTS.md for the full development workflow.
+
+## Project Context
+
+This is a <language> project using <package-manager>.
+- Formatter: <formatter>
+- Linter: <linter>
+- Tests: <test-framework>
+
+## Rules
+
+- Always run `make check` before committing
+- Use conventional commits: `type(scope): description`
+- Write tests for new functionality in `tests/`
+- Follow the linter rules - do not disable them without justification
+
+## Commands
+
+All commands go through the Makefile: `make install`, `make build`, `make format`, `make lint`, `make test`, `make check`.
+
+See AGENTS.md for the complete workflow and guidelines.
+```
+
+**`.windsurfrules`** (Windsurf IDE):
+```markdown
+# Windsurf Rules
+
+Read and follow the instructions in AGENTS.md for the full development workflow.
+
+## Quick Reference
+
+- Run `make check` before every commit
+- Run `make format` and `make lint` before committing
+- Use conventional commits: `type(scope): description`
+- Write tests for all new functionality
+
+## Tech Stack
+
+- **Language**: <language>
+- **Package Manager**: <package-manager>
+- **Formatter**: <formatter>
+- **Linter**: <linter>
+- **Test Framework**: <test-framework>
+
+## Commands
+
+- `make install` - Install dependencies
+- `make build` - Build the project
+- `make format` - Format code
+- `make lint` - Lint code
+- `make test` - Run tests
+- `make check` - Run all checks
+
+Refer to AGENTS.md for full details on workflow, testing conventions, and code review checklist.
+```
+
+The key principle: **AGENTS.md is the single source of truth**. The agent-specific files (`.cursorrules`, `copilot-instructions.md`, `.windsurfrules`) are lightweight pointers that include enough context for the agent to work independently, but reference AGENTS.md for the full details. This avoids duplication and keeps maintenance easy - update AGENTS.md and all agents benefit.
+
+### Step 12: Install Skills via SPM
 
 Install standard skills from the SPM registry to enhance the developer workflow:
 
@@ -466,19 +568,19 @@ Ask the user if they want any additional skills installed. Mention that `ship` g
 
 If SPM is not available, inform the user they can install it and then run `spm install ship` manually later. Do not block the rest of the setup on this.
 
-### Step 12: Create Supporting Files
+### Step 13: Create Supporting Files
 
 1. **README.md** - Basic readme with project name, description, setup instructions, and available make commands
 2. **LICENSE** - Generate the selected license (default MIT)
 3. Initialize git if not already initialized (`git init`)
 
-### Step 13: Install Dependencies and Verify
+### Step 14: Install Dependencies and Verify
 
 1. Run `make install` to install all dependencies
 2. Run `make check` to verify the full pipeline works
 3. If anything fails, fix it before finishing
 
-### Step 14: Final Summary
+### Step 15: Final Summary
 
 Report to the user what was created:
 
@@ -486,18 +588,21 @@ Report to the user what was created:
 Repository standard setup complete!
 
 Created:
-  - <package-config>     (project config)
-  - <formatter-config>   (formatter)
-  - <linter-config>      (linter)
-  - Makefile             (build commands)
-  - .gitignore           (ignore rules)
-  - .github/workflows/   (CI pipeline)
-  - CLAUDE.md            (AI agent instructions)
-  - AGENTS.md            (AI agent workflow)
-  - README.md            (documentation)
-  - LICENSE              (MIT)
-  - src/                 (source directory)
-  - tests/               (test directory + sample test)
+  - <package-config>           (project config)
+  - <formatter-config>         (formatter)
+  - <linter-config>            (linter)
+  - Makefile                   (build commands)
+  - .gitignore                 (ignore rules)
+  - .github/workflows/ci.yml   (CI pipeline)
+  - CLAUDE.md                  (Claude agent instructions)
+  - AGENTS.md                  (shared AI agent instructions)
+  - .cursorrules               (Cursor IDE instructions)
+  - .github/copilot-instructions.md  (GitHub Copilot instructions)
+  - .windsurfrules             (Windsurf IDE instructions)
+  - README.md                  (documentation)
+  - LICENSE                    (MIT)
+  - src/                       (source directory)
+  - tests/                     (test directory + sample test)
 
 Skills installed (via SPM):
   - ship               /ship - full quality pipeline
